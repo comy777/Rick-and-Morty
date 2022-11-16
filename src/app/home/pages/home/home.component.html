@@ -1,0 +1,31 @@
+<div class="p-4">
+  <div *ngIf="loading">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+    </ngx-loading>
+  </div>
+  <div class="md:flex md:justify-center md:items-center sm:block relative md:my-5 sm:my-12">
+    <h1 class="text-center font-bold text-2xl">Rick and Morty</h1>
+    <div
+      class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer absolute left-0"
+      routerLink="locations">
+      Locations
+    </div>
+    <div
+      class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer absolute right-0"
+      *ngIf="favorite" routerLink="favorites">
+      Favorites
+    </div>
+  </div>
+  <hr />
+  <div class="grid md:grid-cols-3 gap-4 md:mt-5 sm:mt-12 sm:grid-cols-2">
+    <div *ngFor="let item of characters">
+      <app-card [data]="item"></app-card>
+    </div>
+  </div>
+  <div class="flex justify-center my-5">
+    <span (click)="getMoreCharacters(page, true)">{{ prev ? '<<' : 'Pagination' }}</span>
+        <span *ngFor="let item of showPages" class="mx-2 inline-block hover:cursor-pointer"
+          (click)="getMoreCharacters(item)" [ngClass]="{'active': item === page}">{{ item
+          }}</span>
+  </div>
+</div>

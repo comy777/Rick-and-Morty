@@ -1,0 +1,72 @@
+<div class="m-5">
+  <div *ngIf="loading && !character; else elseBlock">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+    </ngx-loading>
+  </div>
+  <ng-template #elseBlock>
+    <div *ngIf="character">
+      <div class="flex justify-center items-center mb-2">
+        <img [src]="character.image" />
+      </div>
+      <h1 class="text-center text-3xl font-bold">{{ character.name }}</h1>
+      <div class="grid align-middle">
+        <div class="flex justify-center">
+          <app-information [gender]="character.gender" [status]="character.status" [species]="character.species">
+          </app-information>
+        </div>
+        <div
+          class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer"
+          (click)="setFavorite(false)">
+          {{ favorite ? 'Remove to favorites' : 'Add to favorites' }}
+        </div>
+      </div>
+      <div>
+        <div class="my-5 flex items-center">
+          <div class="flex items-center h-full">
+            <h5 class="font-bold">Origin: </h5>
+            <p class="ml-1">{{ character.origin.name }}</p>
+          </div>
+        </div>
+        <div class="my-5 flex items-center justify-between h-12">
+          <div class="flex items-center">
+            <h5 class="font-bold">Location: </h5>
+            <p class="ml-1">{{ character.location.name }}</p>
+          </div>
+          <div
+            class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer"
+            (click)="changeEpisode(character.location.url, 'location/')">
+            Show
+          </div>
+        </div>
+      </div>
+      <div>
+        <div (click)="setShowChapters()" class="hover:cursor-pointer flex justify-between w-full">
+          <div class="text-xl font-bold">Chapters</div>
+          <div>
+            <fa-icon *ngIf="show; else elseIcon" [icon]="arrowUp"></fa-icon>
+            <ng-template #elseIcon>
+              <fa-icon [icon]="arrowDown"></fa-icon>
+            </ng-template>
+          </div>
+        </div>
+        <div *ngIf="show">
+          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+            <li *ngFor="let episode of character.episode" class="m-2">
+              <div class="flex justify-between items-center">
+                <div class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  {{ episode | episodes }}
+                </div>
+                <div
+                  class="h-8 flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:cursor-pointer"
+                  (click)="changeEpisode(episode, 'chapter/')">
+                  Show
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </ng-template>
+</div>

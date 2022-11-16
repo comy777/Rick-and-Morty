@@ -1,0 +1,45 @@
+<div class="m-5">
+  <div *ngIf="loading; else elseBlock">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  </div>
+  <ng-template #elseBlock>
+    <div>
+      <div class="w-full flex justify-center">
+        <div
+          class="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-center justify-between mb-4">
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Locations</h5>
+          </div>
+          <div class="flow-root">
+            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+              <li class="py-3 sm:py-4" *ngFor="let location of locations">
+                <div class="flex items-center space-x-4">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                      Name: {{location.name}}
+                    </p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                      Number of residents: {{location.residents.length}}
+                    </p>
+                  </div>
+                  <div
+                    class="hover:cursor-pointer inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
+                    [routerLink]="['/location', location.id]">
+                    Show
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center my-5">
+        <span (click)="getMoreLocations(page, true)">{{ prev ? '<<' : 'Pagination' }}</span>
+            <span *ngFor="let item of showPages" class="mx-2 inline-block hover:cursor-pointer"
+              (click)="getMoreLocations(item)" [ngClass]="{'active': item === page}">{{ item
+              }}</span>
+      </div>
+    </div>
+  </ng-template>
+</div>
